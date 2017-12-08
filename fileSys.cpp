@@ -16,6 +16,16 @@ bool keepOnOrNah() {
     return false;
 }
 
+void convert (bool kb) {
+    int bytes;
+    cout << "Bytes:  ";
+    cin >> bytes;
+	if (kb)
+	    cout << (bytes/1024.0) << " KB\n";
+	else
+    	cout << (bytes/1048576.0) << " MB\n";
+}
+
 int main() {
     cout << "\n\nYa dirty cheat.\n"
             << "You'll have to restart this program to calculate stuff on a different file system.\n"
@@ -30,7 +40,7 @@ int main() {
     cin >> inode_size;
 
     int block_pointers_per_inode;
-    cout << "Block pointers per inode (lvls of indirection):  ";
+    cout << "Block pointers per inode (lvls of indirection + 1):  ";
     cin >> block_pointers_per_inode;
 
     bool keepGoing = true;
@@ -91,18 +101,12 @@ label:
                 goto label2;
             case 7: // B->KB
             {
-                int bytes;
-                cout << "Bytes:  ";
-                cin >> bytes;
-                cout << (bytes/1024.0) << " KB\n";
+            	convert(true);
                 break;
             }
             case 8: // B->MB
             {
-                int bytes;
-                cout << "Bytes:  ";
-                cin >> bytes;
-                cout << (bytes/1048576.0) << " MB\n";
+            	convert(false);
                 break;
             }
             default:
