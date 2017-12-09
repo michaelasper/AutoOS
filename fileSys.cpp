@@ -16,7 +16,7 @@ bool keepOnOrNah() {
     return false;
 }
 
-void convert (bool kb) {
+void convert (bool kb = true) {
     int bytes;
     cout << "Bytes:  ";
     cin >> bytes;
@@ -27,24 +27,25 @@ void convert (bool kb) {
 }
 
 int main() {
-    cout << "\n\nYa dirty cheat.\n"
-            << "You'll have to restart this program to calculate stuff on a different file system.\n"
-            << "Remember, 1k bytes is 1024. 1M is 1048576.\n";
-
-    int block_size;
-    cout << "Block size (in bytes):  ";
-    cin >> block_size;
-
-    int inode_size;
-    cout << "Bytes per i-node:  ";
-    cin >> inode_size;
-
-    int block_pointers_per_inode;
-    cout << "Block pointers per inode (lvls of indirection + 1):  ";
-    cin >> block_pointers_per_inode;
+    cout << "\n\nYa dirty cheat." << endl
+            << "Remember, 1k bytes is 1024. 1M is 1048576." << endl;
 
     bool keepGoing = true;
     while (keepGoing) {
+reset:
+
+         int block_size, inode_size, indirection; 
+    
+        cout << "Block size (in bytes):  ";
+        cin >> block_size;
+
+        cout << "Bytes per i-node:  ";
+        cin >> inode_size;
+
+        cout << "Single Indirect blocks: 1, Double Indirect blocks: 2, etc..." << endl
+        << "How many levels of indirection are there: ";
+        cin >> indirection;
+
 label:
         int choice;
         cout << "\n\n<==---------------------+|+---------------------==>\n\n";
@@ -57,6 +58,7 @@ label:
                 << "6: 'What is the largest number of files?'\n"
                 << "7: B -> KB\n"
                 << "8: B -> MB\n"
+                << "9: Change file system config\n"
                 << "\nChoice:  ";
         cin >> choice;
         switch (choice) {
@@ -96,18 +98,35 @@ label:
 
             }
             case 5: // TODO size largest
+            {
+
+                uint64_t largest_size = 0;
+                // Add the direct block
+                largest_size += block_size;
+                int number_of_pointers = pow((block_size / 4), indirection);
+                largest_size += block_size*number_of_pointers;
+                cout << "Largest file size is: " << largest_size << " B" << endl;
+                break;
+
+
+
+            }
             case 6: // TODO largest num files
                 cout << endl << "You chose '" << choice << "'." << endl;
                 goto label2;
             case 7: // B->KB
             {
-            	convert(true);
+            	convert();
                 break;
             }
             case 8: // B->MB
             {
             	convert(false);
                 break;
+            }
+            case 9:
+            {
+                goto reset;
             }
             default:
                 cout << endl << "Please choose one of the options." << endl;
