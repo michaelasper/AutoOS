@@ -31,21 +31,18 @@ int main() {
             << "Remember, 1k bytes is 1024. 1M is 1048576." << endl;
 
     bool keepGoing = true;
-    while (keepGoing) {
-reset:
-
-         int block_size, inode_size, indirection; 
+    int block_size, inode_size, indirection; 
     
-        cout << "Block size (in bytes):  ";
-        cin >> block_size;
+    cout << "Block size (in bytes):  ";
+    cin >> block_size;
 
-        cout << "Bytes per i-node:  ";
-        cin >> inode_size;
+    cout << "Bytes per i-node:  ";
+    cin >> inode_size;
 
-        cout << "Single Indirect blocks: 1, Double Indirect blocks: 2, etc..." << endl
-        << "How many levels of indirection are there: ";
-        cin >> indirection;
-
+    cout << "Single Indirect blocks: 1, Double Indirect blocks: 2, etc..." << endl
+    << "How many levels of indirection are there: ";
+    cin >> indirection;
+    while (keepGoing) {
 label:
         int choice;
         cout << "\n\n<==---------------------+|+---------------------==>\n\n";
@@ -126,7 +123,18 @@ label:
             }
             case 9:
             {
-                goto reset;
+                cout << "Block size (in bytes):  ";
+                cin >> block_size;
+
+                cout << "Bytes per i-node:  ";
+                cin >> inode_size;
+
+                cout << "Single Indirect blocks: 1, Double Indirect blocks: 2, etc..." << endl
+                << "How many levels of indirection are there: ";
+                cin >> indirection;
+                goto label;
+                break;
+
             }
             default:
                 cout << endl << "Please choose one of the options." << endl;
